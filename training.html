@@ -806,9 +806,61 @@
             .container { padding: 0 16px; }
             .gallery-grid { grid-template-columns: 1fr 1fr; }
         }
+
+        /* ===== Custom Cursor ===== */
+        @media (pointer: fine) {
+            * { cursor: none !important; }
+            .custom-cursor {
+                position: fixed;
+                top: 0; left: 0;
+                width: 32px; height: 32px;
+                border-radius: 50%;
+                border: 2px solid var(--primary);
+                background: rgba(255,140,66,0.08);
+                pointer-events: none;
+                z-index: 99999;
+                transform: translate(-50%, -50%);
+                transition: width 0.25s, height 0.25s, background 0.25s, border-color 0.25s, opacity 0.25s;
+                will-change: transform;
+            }
+            .custom-cursor::after {
+                content: '';
+                position: absolute;
+                top: 50%; left: 50%;
+                width: 6px; height: 6px;
+                background: var(--primary);
+                border-radius: 50%;
+                transform: translate(-50%, -50%);
+                transition: width 0.25s, height 0.25s, background 0.25s, opacity 0.25s;
+            }
+            .custom-cursor.hover {
+                width: 52px; height: 52px;
+                background: rgba(255,140,66,0.15);
+                border-color: var(--primary-hover);
+            }
+            .custom-cursor.hover::after {
+                width: 0; height: 0;
+                opacity: 0;
+            }
+            .custom-cursor.click {
+                width: 24px; height: 24px;
+                background: rgba(255,140,66,0.35);
+                border-color: var(--primary-hover);
+            }
+            .custom-cursor.click::after {
+                width: 10px; height: 10px;
+                background: var(--primary-hover);
+            }
+            .custom-cursor.hidden {
+                opacity: 0;
+            }
+        }
     </style>
 </head>
 <body>
+
+    <!-- Custom Cursor -->
+    <div class="custom-cursor" id="customCursor"></div>
 
     <!-- ==================== HEADER ==================== -->
     <header class="header" id="header">
@@ -1039,6 +1091,30 @@
         document.querySelectorAll('.fade-up').forEach(function(el) {
             observer.observe(el);
         });
+
+        // === Custom Cursor ===
+        var cursor = document.getElementById('customCursor');
+        if (cursor && window.matchMedia('(pointer: fine)').matches) {
+            var cx = 0, cy = 0, px = 0, py = 0;
+            document.addEventListener('mousemove', function(e) {
+                cx = e.clientX; cy = e.clientY;
+            });
+            (function moveCursor() {
+                px += (cx - px) * 0.15;
+                py += (cy - py) * 0.15;
+                cursor.style.transform = 'translate(' + px + 'px,' + py + 'px) translate(-50%,-50%)';
+                requestAnimationFrame(moveCursor);
+            })();
+            var hoverEls = 'a, button, input, textarea, select, [role="button"], .btn, .nav-link, .program-card, .gallery-item, .pricing-card';
+            document.querySelectorAll(hoverEls).forEach(function(el) {
+                el.addEventListener('mouseenter', function() { cursor.classList.add('hover'); });
+                el.addEventListener('mouseleave', function() { cursor.classList.remove('hover'); });
+            });
+            document.addEventListener('mousedown', function() { cursor.classList.add('click'); });
+            document.addEventListener('mouseup', function() { cursor.classList.remove('click'); });
+            document.addEventListener('mouseleave', function() { cursor.classList.add('hidden'); });
+            document.addEventListener('mouseenter', function() { cursor.classList.remove('hidden'); });
+        }
     })();
     </script>
 
