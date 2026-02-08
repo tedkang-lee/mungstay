@@ -1327,51 +1327,53 @@
             .schedule-time { width: auto; }
         }
 
-        /* ===== Custom Cursor ===== */
+        /* ===== Custom Cursor (studio-jt style) ===== */
         @media (pointer: fine) {
             * { cursor: none !important; }
-            .custom-cursor {
+            .cursor-dot {
                 position: fixed;
                 top: 0; left: 0;
-                width: 32px; height: 32px;
+                width: 8px; height: 8px;
+                background: #222;
                 border-radius: 50%;
-                border: 2px solid var(--primary);
-                background: rgba(255,140,66,0.08);
+                pointer-events: none;
+                z-index: 100000;
+                transform: translate(-50%, -50%);
+                transition: opacity 0.3s, background 0.3s, width 0.3s, height 0.3s;
+                will-change: transform;
+            }
+            .cursor-circle {
+                position: fixed;
+                top: 0; left: 0;
+                width: 40px; height: 40px;
+                border: 1.5px solid rgba(34,34,34,0.5);
+                border-radius: 50%;
                 pointer-events: none;
                 z-index: 99999;
                 transform: translate(-50%, -50%);
-                transition: width 0.25s, height 0.25s, background 0.25s, border-color 0.25s, opacity 0.25s;
+                transition: width 0.35s cubic-bezier(0.25,1,0.5,1), height 0.35s cubic-bezier(0.25,1,0.5,1), border-color 0.35s, background 0.35s, opacity 0.3s;
                 will-change: transform;
             }
-            .custom-cursor::after {
-                content: '';
-                position: absolute;
-                top: 50%; left: 50%;
-                width: 6px; height: 6px;
-                background: var(--primary);
-                border-radius: 50%;
-                transform: translate(-50%, -50%);
-                transition: width 0.25s, height 0.25s, background 0.25s, opacity 0.25s;
-            }
-            .custom-cursor.hover {
-                width: 52px; height: 52px;
-                background: rgba(255,140,66,0.15);
-                border-color: var(--primary-hover);
-            }
-            .custom-cursor.hover::after {
+            .cursor-dot.hover {
                 width: 0; height: 0;
                 opacity: 0;
             }
-            .custom-cursor.click {
-                width: 24px; height: 24px;
-                background: rgba(255,140,66,0.35);
-                border-color: var(--primary-hover);
+            .cursor-circle.hover {
+                width: 70px; height: 70px;
+                border-color: var(--primary);
+                background: rgba(255,140,66,0.1);
             }
-            .custom-cursor.click::after {
-                width: 10px; height: 10px;
-                background: var(--primary-hover);
+            .cursor-dot.click {
+                width: 6px; height: 6px;
+                background: var(--primary);
             }
-            .custom-cursor.hidden {
+            .cursor-circle.click {
+                width: 30px; height: 30px;
+                border-color: var(--primary);
+                background: rgba(255,140,66,0.18);
+            }
+            .cursor-dot.hidden,
+            .cursor-circle.hidden {
                 opacity: 0;
             }
         }
@@ -1380,7 +1382,8 @@
 <body>
 
     <!-- Custom Cursor -->
-    <div class="custom-cursor" id="customCursor"></div>
+    <div class="cursor-dot" id="cursorDot"></div>
+    <div class="cursor-circle" id="cursorCircle"></div>
 
     <!-- ==================== HEADER ==================== -->
     <header class="header" id="header">
@@ -2156,28 +2159,41 @@
         onScroll();
         highlightNav();
 
-        // === Custom Cursor ===
-        var cursor = document.getElementById('customCursor');
-        if (cursor && window.matchMedia('(pointer: fine)').matches) {
-            var cx = 0, cy = 0, px = 0, py = 0;
+        // === Custom Cursor (studio-jt style) ===
+        var dot = document.getElementById('cursorDot');
+        var circle = document.getElementById('cursorCircle');
+        if (dot && circle && window.matchMedia('(pointer: fine)').matches) {
+            var mx = -100, my = -100;
+            var dx = -100, dy = -100;
+            var cx = -100, cy = -100;
+
             document.addEventListener('mousemove', function(e) {
-                cx = e.clientX; cy = e.clientY;
+                mx = e.clientX; my = e.clientY;
             });
-            (function moveCursor() {
-                px += (cx - px) * 0.15;
-                py += (cy - py) * 0.15;
-                cursor.style.transform = 'translate(' + px + 'px,' + py + 'px) translate(-50%,-50%)';
-                requestAnimationFrame(moveCursor);
+
+            (function animate() {
+                // dot follows instantly
+                dx += (mx - dx) * 0.9;
+                dy += (my - dy) * 0.9;
+                dot.style.transform = 'translate(' + dx + 'px,' + dy + 'px) translate(-50%,-50%)';
+
+                // circle follows with smooth delay
+                cx += (mx - cx) * 0.12;
+                cy += (my - cy) * 0.12;
+                circle.style.transform = 'translate(' + cx + 'px,' + cy + 'px) translate(-50%,-50%)';
+
+                requestAnimationFrame(animate);
             })();
+
             var hoverEls = 'a, button, input, textarea, select, [role="button"], .btn, .nav-link, .service-card, .gallery-item, .testimonial-card, .news-card';
             document.querySelectorAll(hoverEls).forEach(function(el) {
-                el.addEventListener('mouseenter', function() { cursor.classList.add('hover'); });
-                el.addEventListener('mouseleave', function() { cursor.classList.remove('hover'); });
+                el.addEventListener('mouseenter', function() { dot.classList.add('hover'); circle.classList.add('hover'); });
+                el.addEventListener('mouseleave', function() { dot.classList.remove('hover'); circle.classList.remove('hover'); });
             });
-            document.addEventListener('mousedown', function() { cursor.classList.add('click'); });
-            document.addEventListener('mouseup', function() { cursor.classList.remove('click'); });
-            document.addEventListener('mouseleave', function() { cursor.classList.add('hidden'); });
-            document.addEventListener('mouseenter', function() { cursor.classList.remove('hidden'); });
+            document.addEventListener('mousedown', function() { dot.classList.add('click'); circle.classList.add('click'); });
+            document.addEventListener('mouseup', function() { dot.classList.remove('click'); circle.classList.remove('click'); });
+            document.addEventListener('mouseleave', function() { dot.classList.add('hidden'); circle.classList.add('hidden'); });
+            document.addEventListener('mouseenter', function() { dot.classList.remove('hidden'); circle.classList.remove('hidden'); });
         }
     })();
     </script>
