@@ -1,0 +1,1196 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>반려견 유치원 - 멍스테이</title>
+    <meta name="description" content="멍스테이 반려견 유치원 - 전문 트레이너와 함께하는 사회화 교육, 놀이 프로그램. 소규모 맞춤 케어.">
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --primary: #FF8C42;
+            --primary-hover: #E67A30;
+            --primary-light: rgba(255,140,66,0.1);
+            --accent: #4ECDC4;
+            --accent-light: rgba(78,205,196,0.1);
+            --dark: #2C2C2C;
+            --dark-light: #3A3A3A;
+            --white: #FFFFFF;
+            --bg: #FFF9F5;
+            --bg-alt: #F0FFFE;
+            --gray-100: #F5F5F5;
+            --gray-200: #EEEEEE;
+            --gray-300: #E0E0E0;
+            --gray-500: #888888;
+            --gray-600: #666666;
+            --warm-brown: #8B6F47;
+            --radius: 12px;
+            --radius-lg: 20px;
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.06);
+            --shadow-md: 0 8px 30px rgba(0,0,0,0.08);
+            --shadow-lg: 0 20px 50px rgba(0,0,0,0.12);
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+            color: var(--dark);
+            line-height: 1.6;
+            background: var(--white);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        img { max-width: 100%; display: block; }
+        a { text-decoration: none; color: inherit; }
+
+        /* ===== Header ===== */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(255,255,255,0.97);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--gray-300);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .header-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 72px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            color: var(--dark);
+        }
+
+        .logo-icon { font-size: 28px; line-height: 1; }
+        .logo-accent { color: var(--primary); }
+
+        .nav { display: flex; align-items: center; }
+
+        .nav-list {
+            display: flex;
+            list-style: none;
+            gap: 4px;
+            align-items: center;
+        }
+
+        .nav-link {
+            display: block;
+            padding: 8px 16px;
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--gray-600);
+            border-radius: 8px;
+            transition: color var(--transition), background var(--transition);
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: var(--dark);
+            background: var(--gray-100);
+        }
+
+        .nav-item { position: relative; }
+
+        .nav-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%) translateY(8px);
+            min-width: 180px;
+            background: var(--white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--gray-200);
+            padding: 8px 0;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.2s, visibility 0.2s, transform 0.2s;
+            z-index: 100;
+            list-style: none;
+        }
+
+        .nav-item:hover .nav-dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .nav-dropdown li a {
+            display: block;
+            padding: 10px 20px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--gray-600);
+            transition: background 0.2s, color 0.2s;
+            white-space: nowrap;
+        }
+
+        .nav-dropdown li a:hover {
+            background: var(--primary-light);
+            color: var(--primary);
+        }
+
+        .nav-link.has-sub {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .nav-link.has-sub::after {
+            content: '';
+            width: 0; height: 0;
+            border-left: 4px solid transparent;
+            border-right: 4px solid transparent;
+            border-top: 5px solid currentColor;
+            transition: transform 0.2s;
+        }
+
+        .nav-item:hover .nav-link.has-sub::after { transform: rotate(180deg); }
+
+        .nav-cta {
+            margin-left: 12px;
+            padding: 10px 24px;
+            background: var(--primary);
+            color: var(--white);
+            font-weight: 700;
+            font-size: 14px;
+            border-radius: 8px;
+            transition: background var(--transition), transform var(--transition);
+        }
+
+        .nav-cta:hover {
+            background: var(--primary-hover);
+            transform: translateY(-1px);
+        }
+
+        /* Hamburger */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            gap: 5px;
+            width: 44px;
+            height: 44px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 8px;
+            transition: background var(--transition);
+        }
+
+        .hamburger:hover { background: var(--gray-100); }
+
+        .hamburger span {
+            display: block;
+            width: 22px;
+            height: 2px;
+            background: var(--dark);
+            border-radius: 2px;
+            transition: transform var(--transition), opacity var(--transition);
+        }
+
+        .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+        .hamburger.active span:nth-child(2) { opacity: 0; }
+        .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+        .nav-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.4);
+            z-index: 998;
+            opacity: 0;
+            transition: opacity var(--transition);
+        }
+
+        .nav-overlay.active { display: block; opacity: 1; }
+
+        /* ===== Page Hero ===== */
+        .page-hero {
+            padding: 140px 0 80px;
+            background: linear-gradient(135deg, var(--bg) 0%, #FFF0E6 100%);
+            text-align: center;
+        }
+
+        .page-hero .breadcrumb {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 14px;
+            color: var(--gray-500);
+            margin-bottom: 20px;
+        }
+
+        .breadcrumb a { color: var(--gray-600); transition: color 0.2s; }
+        .breadcrumb a:hover { color: var(--primary); }
+        .breadcrumb span { color: var(--primary); font-weight: 600; }
+
+        .page-hero h1 {
+            font-size: clamp(32px, 5vw, 48px);
+            font-weight: 800;
+            color: var(--dark);
+            margin-bottom: 16px;
+            letter-spacing: -1px;
+        }
+
+        .page-hero h1 .accent { color: var(--primary); }
+
+        .page-hero p {
+            font-size: 18px;
+            color: var(--gray-600);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* ===== Section Common ===== */
+        .section {
+            padding: 100px 0;
+        }
+
+        .section-title {
+            font-size: clamp(24px, 3.5vw, 36px);
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 16px;
+            letter-spacing: -0.5px;
+        }
+
+        .section-desc {
+            text-align: center;
+            color: var(--gray-600);
+            font-size: 16px;
+            max-width: 600px;
+            margin: 0 auto 60px;
+        }
+
+        /* ===== Intro Section ===== */
+        .intro-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .intro-image {
+            background: linear-gradient(135deg, var(--primary-light), var(--accent-light));
+            border-radius: var(--radius-lg);
+            aspect-ratio: 4/3;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 120px;
+        }
+
+        .intro-content h2 {
+            font-size: 32px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            letter-spacing: -0.5px;
+        }
+
+        .intro-content p {
+            color: var(--gray-600);
+            font-size: 16px;
+            line-height: 1.8;
+            margin-bottom: 16px;
+        }
+
+        .intro-highlights {
+            list-style: none;
+            margin-top: 24px;
+        }
+
+        .intro-highlights li {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 0;
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        .intro-highlights li::before {
+            content: '✓';
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            background: var(--primary);
+            color: var(--white);
+            border-radius: 50%;
+            font-size: 14px;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        /* ===== Program Section ===== */
+        .program-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .program-card {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            padding: 36px 28px;
+            border: 1px solid var(--gray-200);
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-align: center;
+        }
+
+        .program-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .program-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .program-card h3 {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .program-card p {
+            color: var(--gray-600);
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        /* ===== Schedule Section ===== */
+        .schedule-section { background: var(--bg); }
+
+        .schedule-table {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .schedule-row {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            padding: 20px 0;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .schedule-row:last-child { border-bottom: none; }
+
+        .schedule-time {
+            width: 80px;
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--primary);
+            flex-shrink: 0;
+        }
+
+        .schedule-dot {
+            width: 14px;
+            height: 14px;
+            background: var(--accent);
+            border-radius: 50%;
+            flex-shrink: 0;
+            position: relative;
+        }
+
+        .schedule-dot::before {
+            content: '';
+            position: absolute;
+            top: 14px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 46px;
+            background: var(--gray-200);
+        }
+
+        .schedule-row:last-child .schedule-dot::before { display: none; }
+
+        .schedule-activity h4 {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .schedule-activity p {
+            font-size: 14px;
+            color: var(--gray-600);
+        }
+
+        /* ===== Pricing Section ===== */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            max-width: 960px;
+            margin: 0 auto;
+        }
+
+        .pricing-card {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            padding: 40px 32px;
+            border: 2px solid var(--gray-200);
+            text-align: center;
+            transition: transform 0.3s, border-color 0.3s;
+            position: relative;
+        }
+
+        .pricing-card.popular {
+            border-color: var(--primary);
+        }
+
+        .pricing-card.popular::before {
+            content: '인기';
+            position: absolute;
+            top: -14px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--primary);
+            color: var(--white);
+            padding: 4px 20px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .pricing-name {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .pricing-desc {
+            font-size: 14px;
+            color: var(--gray-500);
+            margin-bottom: 24px;
+        }
+
+        .pricing-price {
+            font-size: 36px;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 4px;
+        }
+
+        .pricing-unit {
+            font-size: 14px;
+            color: var(--gray-500);
+            margin-bottom: 28px;
+        }
+
+        .pricing-features {
+            list-style: none;
+            text-align: left;
+            margin-bottom: 32px;
+        }
+
+        .pricing-features li {
+            padding: 8px 0;
+            font-size: 14px;
+            color: var(--gray-600);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .pricing-features li::before {
+            content: '✔';
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 14px 32px;
+            font-size: 15px;
+            font-weight: 600;
+            border-radius: 10px;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: all var(--transition);
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255,140,66,0.3);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .pricing-card .btn { width: 100%; }
+
+        /* ===== Gallery Section ===== */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+        }
+
+        .gallery-item {
+            border-radius: var(--radius);
+            overflow: hidden;
+            aspect-ratio: 1;
+            background: linear-gradient(135deg, var(--primary-light), var(--accent-light));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 60px;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .gallery-item:hover { transform: scale(1.03); }
+
+        /* ===== CTA Section ===== */
+        .cta-section {
+            padding: 80px 0;
+            background: linear-gradient(135deg, var(--primary) 0%, #FF6B35 100%);
+            text-align: center;
+            color: var(--white);
+        }
+
+        .cta-section h2 {
+            font-size: clamp(28px, 4vw, 40px);
+            font-weight: 800;
+            margin-bottom: 16px;
+        }
+
+        .cta-section p {
+            font-size: 18px;
+            opacity: 0.9;
+            margin-bottom: 32px;
+        }
+
+        .btn-white {
+            background: var(--white);
+            color: var(--primary);
+            font-weight: 700;
+            padding: 16px 40px;
+            border-radius: 10px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .btn-white:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+
+        /* ===== Footer ===== */
+        .footer {
+            background: var(--dark);
+            color: var(--gray-300);
+            padding: 60px 0 30px;
+        }
+
+        .footer-inner {
+            display: flex;
+            justify-content: space-between;
+            gap: 40px;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+        }
+
+        .footer-brand .logo { color: var(--white); margin-bottom: 12px; }
+
+        .footer-brand p {
+            font-size: 14px;
+            color: var(--gray-500);
+            max-width: 300px;
+            line-height: 1.7;
+        }
+
+        .footer-links h4 {
+            color: var(--white);
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .footer-links ul { list-style: none; }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links li a {
+            font-size: 14px;
+            color: var(--gray-500);
+            transition: color 0.2s;
+        }
+
+        .footer-links li a:hover { color: var(--primary); }
+
+        .footer-bottom {
+            border-top: 1px solid var(--dark-light);
+            padding-top: 24px;
+            text-align: center;
+            font-size: 13px;
+            color: var(--gray-500);
+        }
+
+        /* ===== Scroll Top ===== */
+        .scroll-top {
+            position: fixed;
+            bottom: 28px;
+            right: 28px;
+            width: 48px;
+            height: 48px;
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            border-radius: 50%;
+            font-size: 20px;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all var(--transition);
+            box-shadow: var(--shadow-md);
+            z-index: 500;
+        }
+
+        .scroll-top.visible { opacity: 1; visibility: visible; }
+        .scroll-top:hover { background: var(--primary-hover); transform: translateY(-3px); }
+
+        /* ===== Animations ===== */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s, transform 0.6s;
+        }
+
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ===== Responsive ===== */
+        @media (max-width: 1024px) {
+            .intro-grid { grid-template-columns: 1fr; gap: 40px; }
+            .pricing-grid { grid-template-columns: 1fr 1fr; }
+            .gallery-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+
+        @media (max-width: 768px) {
+            .hamburger { display: flex; }
+
+            .nav {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: min(300px, 85vw);
+                height: 100dvh;
+                background: var(--white);
+                z-index: 999;
+                transition: right var(--transition);
+                padding: 88px 0 40px;
+                box-shadow: -4px 0 20px rgba(0,0,0,0.1);
+                overflow-y: auto;
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .nav.active { right: 0; }
+            .nav-list { flex-direction: column; gap: 0; }
+
+            .nav-link {
+                display: block;
+                padding: 16px 28px;
+                font-size: 16px;
+                border-radius: 0;
+                border-bottom: 1px solid var(--gray-100);
+            }
+
+            .nav-link.has-sub {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .nav-dropdown {
+                position: static;
+                transform: none;
+                box-shadow: none;
+                border: none;
+                border-radius: 0;
+                background: var(--gray-100);
+                max-height: 0;
+                overflow: hidden;
+                opacity: 1;
+                visibility: visible;
+                transition: max-height 0.3s ease;
+                padding: 0;
+            }
+
+            .nav-item.dropdown-open .nav-dropdown { max-height: 300px; transform: none; }
+            .nav-item:hover .nav-dropdown { opacity: 1; visibility: visible; transform: none; max-height: 0; }
+            .nav-item:hover.dropdown-open .nav-dropdown { max-height: 300px; }
+
+            .nav-dropdown li a {
+                padding: 12px 28px 12px 44px;
+                font-size: 15px;
+                border-bottom: 1px solid var(--gray-200);
+            }
+
+            .nav-cta {
+                display: block;
+                margin: 20px 24px 0;
+                text-align: center;
+                padding: 14px 24px;
+            }
+
+            .page-hero { padding: 110px 0 60px; }
+            .program-grid { grid-template-columns: 1fr; }
+            .pricing-grid { grid-template-columns: 1fr; }
+            .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+            .schedule-row { gap: 16px; }
+            .schedule-time { width: 60px; font-size: 14px; }
+            .footer-inner { flex-direction: column; }
+        }
+
+        @media (max-width: 480px) {
+            .container { padding: 0 16px; }
+            .gallery-grid { grid-template-columns: 1fr 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ==================== HEADER ==================== -->
+    <header class="header" id="header">
+        <div class="container">
+            <div class="header-inner">
+                <a href="index.html" class="logo">
+                    <span class="logo-icon">🐕</span>
+                    <span>멍<span class="logo-accent">스테이</span></span>
+                </a>
+                <nav class="nav" id="nav">
+                    <ul class="nav-list">
+                        <li><a href="index.html" class="nav-link">홈</a></li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link has-sub">소개</a>
+                            <ul class="nav-dropdown">
+                                <li><a href="index.html#about">시설안내</a></li>
+                                <li><a href="index.html#schedule">일과표</a></li>
+                                <li><a href="index.html#about">스태프 소개</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link has-sub active">서비스</a>
+                            <ul class="nav-dropdown">
+                                <li><a href="kindergarten.html">유치원</a></li>
+                                <li><a href="hotel.html">호텔</a></li>
+                                <li><a href="grooming.html">미용 & 그루밍</a></li>
+                                <li><a href="training.html">행동교정</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link has-sub">커뮤니티</a>
+                            <ul class="nav-dropdown">
+                                <li><a href="index.html#gallery">갤러리</a></li>
+                                <li><a href="index.html#testimonials">후기</a></li>
+                                <li><a href="index.html#news">소식</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <a href="index.html#contact" class="nav-cta">상담 예약</a>
+                </nav>
+                <button class="hamburger" id="hamburger" aria-label="메뉴 열기">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+    <div class="nav-overlay" id="navOverlay"></div>
+
+    <!-- ==================== PAGE HERO ==================== -->
+    <section class="page-hero">
+        <div class="container">
+            <div class="breadcrumb">
+                <a href="index.html">홈</a> / <a href="#">서비스</a> / <span>유치원</span>
+            </div>
+            <h1>반려견 <span class="accent">유치원</span> 🐾</h1>
+            <p>전문 트레이너와 함께하는 체계적인 사회화 교육과 맞춤 놀이 프로그램으로 우리 아이의 행복한 하루를 만들어 갑니다.</p>
+        </div>
+    </section>
+
+    <!-- ==================== INTRO ==================== -->
+    <section class="section">
+        <div class="container">
+            <div class="intro-grid fade-up">
+                <div class="intro-image">🐶</div>
+                <div class="intro-content">
+                    <h2>왜 멍스테이 유치원인가요?</h2>
+                    <p>멍스테이 유치원은 반려견의 사회성 발달과 정서적 안정을 최우선으로 생각합니다. 소규모 그룹 운영으로 각 반려견에게 충분한 관심과 케어를 제공합니다.</p>
+                    <p>반려견 행동학 전문가와 수의 간호사가 상주하며, 과학적이고 체계적인 프로그램을 운영합니다.</p>
+                    <ul class="intro-highlights">
+                        <li>소규모 맞춤 케어 (최대 15마리)</li>
+                        <li>전문 트레이너 3명 상시 배치</li>
+                        <li>실시간 CCTV 모니터링</li>
+                        <li>넓은 실내외 놀이 공간 (200평)</li>
+                        <li>성격별 그룹 분리 운영</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== PROGRAMS ==================== -->
+    <section class="section" style="background: var(--bg);">
+        <div class="container">
+            <h2 class="section-title fade-up">유치원 프로그램</h2>
+            <p class="section-desc fade-up">반려견의 연령, 성격, 체력에 맞춘 다양한 프로그램을 운영합니다.</p>
+            <div class="program-grid">
+                <div class="program-card fade-up">
+                    <div class="program-icon">🤝</div>
+                    <h3>사회화 교육</h3>
+                    <p>다른 반려견, 사람과의 건강한 교류 방법을 배우며 사회성을 키웁니다. 성격에 맞는 그룹별 활동을 진행합니다.</p>
+                </div>
+                <div class="program-card fade-up">
+                    <div class="program-icon">🏃</div>
+                    <h3>체력 활동</h3>
+                    <p>넓은 실내외 운동장에서 자유 놀이, 장애물 훈련, 공놀이 등 다양한 신체 활동을 통해 건강을 유지합니다.</p>
+                </div>
+                <div class="program-card fade-up">
+                    <div class="program-icon">🧠</div>
+                    <h3>노즈워크</h3>
+                    <p>후각을 활용한 탐색 놀이로 두뇌 활동을 자극하고 스트레스를 해소합니다. 난이도별 맞춤 프로그램을 제공합니다.</p>
+                </div>
+                <div class="program-card fade-up">
+                    <div class="program-icon">📚</div>
+                    <h3>기본 예절 교육</h3>
+                    <p>앉아, 기다려, 이리와 등 기본 명령어 교육과 산책 매너 훈련을 진행합니다.</p>
+                </div>
+                <div class="program-card fade-up">
+                    <div class="program-icon">🎨</div>
+                    <h3>감각 놀이</h3>
+                    <p>다양한 질감, 소리, 환경 자극을 통해 감각을 발달시키고 새로운 경험에 대한 적응력을 높입니다.</p>
+                </div>
+                <div class="program-card fade-up">
+                    <div class="program-icon">😴</div>
+                    <h3>휴식 & 낮잠</h3>
+                    <p>개별 휴식 공간에서 충분한 낮잠과 휴식 시간을 보장합니다. 편안한 침구와 적정 온도를 유지합니다.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== DAILY SCHEDULE ==================== -->
+    <section class="section schedule-section">
+        <div class="container">
+            <h2 class="section-title fade-up">하루 일과표</h2>
+            <p class="section-desc fade-up">체계적인 일과로 반려견의 건강한 하루를 만듭니다.</p>
+            <div class="schedule-table fade-up">
+                <div class="schedule-row">
+                    <div class="schedule-time">08:00</div>
+                    <div class="schedule-dot"></div>
+                    <div class="schedule-activity">
+                        <h4>등원 & 건강체크</h4>
+                        <p>체온, 컨디션 체크 후 친구들과 인사</p>
+                    </div>
+                </div>
+                <div class="schedule-row">
+                    <div class="schedule-time">09:00</div>
+                    <div class="schedule-dot"></div>
+                    <div class="schedule-activity">
+                        <h4>오전 산책 & 체력 활동</h4>
+                        <p>실외 운동장에서 자유 놀이 및 산책</p>
+                    </div>
+                </div>
+                <div class="schedule-row">
+                    <div class="schedule-time">10:30</div>
+                    <div class="schedule-dot"></div>
+                    <div class="schedule-activity">
+                        <h4>사회화 & 그룹 활동</h4>
+                        <p>성격 맞춤 그룹별 교류 및 놀이</p>
+                    </div>
+                </div>
+                <div class="schedule-row">
+                    <div class="schedule-time">12:00</div>
+                    <div class="schedule-dot"></div>
+                    <div class="schedule-activity">
+                        <h4>점심 & 휴식</h4>
+                        <p>개별 급식 및 낮잠 시간</p>
+                    </div>
+                </div>
+                <div class="schedule-row">
+                    <div class="schedule-time">14:00</div>
+                    <div class="schedule-dot"></div>
+                    <div class="schedule-activity">
+                        <h4>노즈워크 & 두뇌 활동</h4>
+                        <p>후각 놀이, 퍼즐 장난감, 감각 자극 활동</p>
+                    </div>
+                </div>
+                <div class="schedule-row">
+                    <div class="schedule-time">15:30</div>
+                    <div class="schedule-dot"></div>
+                    <div class="schedule-activity">
+                        <h4>오후 자유 놀이</h4>
+                        <p>실내 놀이터에서 친구들과 자유 시간</p>
+                    </div>
+                </div>
+                <div class="schedule-row">
+                    <div class="schedule-time">17:00</div>
+                    <div class="schedule-dot"></div>
+                    <div class="schedule-activity">
+                        <h4>하원 준비 & 알림장</h4>
+                        <p>하루 활동 보고서 작성 및 보호자 전달</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== PRICING ==================== -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title fade-up">이용 요금</h2>
+            <p class="section-desc fade-up">합리적인 가격으로 최고의 케어를 제공합니다.</p>
+            <div class="pricing-grid">
+                <div class="pricing-card fade-up">
+                    <div class="pricing-name">일일권</div>
+                    <div class="pricing-desc">하루 체험 이용</div>
+                    <div class="pricing-price">35,000원</div>
+                    <div class="pricing-unit">1일 기준</div>
+                    <ul class="pricing-features">
+                        <li>08:00 ~ 17:00 이용</li>
+                        <li>전 프로그램 참여</li>
+                        <li>간식 제공</li>
+                        <li>하루 활동 보고서</li>
+                    </ul>
+                    <a href="index.html#contact" class="btn btn-outline">상담 신청</a>
+                </div>
+                <div class="pricing-card popular fade-up">
+                    <div class="pricing-name">정기권 (월)</div>
+                    <div class="pricing-desc">주 5일 정기 이용</div>
+                    <div class="pricing-price">550,000원</div>
+                    <div class="pricing-unit">월 기준 (주 5일)</div>
+                    <ul class="pricing-features">
+                        <li>08:00 ~ 17:00 이용</li>
+                        <li>전 프로그램 참여</li>
+                        <li>간식 제공</li>
+                        <li>매일 활동 보고서</li>
+                        <li>월 1회 건강 체크</li>
+                        <li>픽업 서비스 할인</li>
+                    </ul>
+                    <a href="index.html#contact" class="btn btn-primary">상담 신청</a>
+                </div>
+                <div class="pricing-card fade-up">
+                    <div class="pricing-name">회수권 (10회)</div>
+                    <div class="pricing-desc">자유롭게 10회 이용</div>
+                    <div class="pricing-price">300,000원</div>
+                    <div class="pricing-unit">10회 기준</div>
+                    <ul class="pricing-features">
+                        <li>08:00 ~ 17:00 이용</li>
+                        <li>전 프로그램 참여</li>
+                        <li>간식 제공</li>
+                        <li>하루 활동 보고서</li>
+                        <li>유효기간 3개월</li>
+                    </ul>
+                    <a href="index.html#contact" class="btn btn-outline">상담 신청</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== GALLERY ==================== -->
+    <section class="section" style="background: var(--bg);">
+        <div class="container">
+            <h2 class="section-title fade-up">유치원 갤러리</h2>
+            <p class="section-desc fade-up">즐겁게 놀고 배우는 우리 아이들의 모습</p>
+            <div class="gallery-grid fade-up">
+                <div class="gallery-item">🐕</div>
+                <div class="gallery-item">🎾</div>
+                <div class="gallery-item">🐾</div>
+                <div class="gallery-item">🌳</div>
+                <div class="gallery-item">🐶</div>
+                <div class="gallery-item">🏊</div>
+                <div class="gallery-item">🦮</div>
+                <div class="gallery-item">🎀</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== CTA ==================== -->
+    <section class="cta-section">
+        <div class="container">
+            <h2>우리 아이의 첫 유치원,<br>멍스테이와 함께하세요!</h2>
+            <p>무료 체험 상담을 신청하시면 1일 체험권을 드립니다.</p>
+            <a href="index.html#contact" class="btn-white">무료 체험 신청하기</a>
+        </div>
+    </section>
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-inner">
+                <div class="footer-brand">
+                    <a href="index.html" class="logo">
+                        <span class="logo-icon">🐕</span>
+                        <span>멍<span class="logo-accent">스테이</span></span>
+                    </a>
+                    <p>반려견과 보호자 모두가 행복한 프리미엄 반려견센터. 전문 트레이너와 함께하는 안전하고 즐거운 공간입니다.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>서비스</h4>
+                    <ul>
+                        <li><a href="kindergarten.html">유치원</a></li>
+                        <li><a href="hotel.html">호텔</a></li>
+                        <li><a href="grooming.html">미용 & 그루밍</a></li>
+                        <li><a href="training.html">행동교정</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>고객 지원</h4>
+                    <ul>
+                        <li><a href="index.html#contact">상담 예약</a></li>
+                        <li><a href="index.html#news">공지사항</a></li>
+                        <li><a href="#">이용약관</a></li>
+                        <li><a href="#">개인정보처리방침</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 멍스테이. All rights reserved. | 서울 강남구 역삼로 123 | 02-555-0050</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll Top -->
+    <button class="scroll-top" id="scrollTop" aria-label="맨 위로">↑</button>
+
+    <!-- ==================== JAVASCRIPT ==================== -->
+    <script>
+    (function() {
+        'use strict';
+
+        var header = document.getElementById('header');
+        var hamburger = document.getElementById('hamburger');
+        var nav = document.getElementById('nav');
+        var overlay = document.getElementById('navOverlay');
+        var scrollTopBtn = document.getElementById('scrollTop');
+
+        // Mobile Menu
+        function openMenu() {
+            hamburger.classList.add('active');
+            nav.classList.add('active');
+            overlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeMenu() {
+            hamburger.classList.remove('active');
+            nav.classList.remove('active');
+            overlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        hamburger.addEventListener('click', function() {
+            nav.classList.contains('active') ? closeMenu() : openMenu();
+        });
+
+        overlay.addEventListener('click', closeMenu);
+
+        nav.querySelectorAll('.nav-link:not(.has-sub), .nav-cta, .nav-dropdown a').forEach(function(link) {
+            link.addEventListener('click', closeMenu);
+        });
+
+        // Dropdown (mobile accordion)
+        var navItems = document.querySelectorAll('.nav-item');
+        navItems.forEach(function(item) {
+            var link = item.querySelector('.nav-link.has-sub');
+            if (link) {
+                link.addEventListener('click', function(e) {
+                    if (window.innerWidth <= 768) {
+                        e.preventDefault();
+                        navItems.forEach(function(other) {
+                            if (other !== item) other.classList.remove('dropdown-open');
+                        });
+                        item.classList.toggle('dropdown-open');
+                    }
+                });
+            }
+        });
+
+        // Scroll
+        window.addEventListener('scroll', function() {
+            var y = window.scrollY;
+            header.classList.toggle('scrolled', y > 20);
+            scrollTopBtn.classList.toggle('visible', y > 600);
+        });
+
+        scrollTopBtn.addEventListener('click', function() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Fade-up animation
+        var observer = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.fade-up').forEach(function(el) {
+            observer.observe(el);
+        });
+    })();
+    </script>
+
+</body>
+</html>
