@@ -1079,6 +1079,13 @@
             document.addEventListener('mouseup', function() { cursorImg.classList.remove('click'); });
             document.addEventListener('mouseleave', function() { cursorImg.classList.add('hidden'); });
             document.addEventListener('mouseenter', function() { cursorImg.classList.remove('hidden'); });
+
+            // Chrome 강제 커서 숨김
+            var style = document.createElement('style');
+            style.textContent = 'html, html *, html *::before, html *::after { cursor: none !important; }';
+            document.head.appendChild(style);
+            document.documentElement.style.setProperty('cursor', 'none', 'important');
+            document.body.style.setProperty('cursor', 'none', 'important');
         }
     })();
     </script>
