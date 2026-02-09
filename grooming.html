@@ -807,53 +807,28 @@
             .gallery-grid { grid-template-columns: 1fr 1fr; }
         }
 
-        /* ===== Custom Cursor (studio-jt style) ===== */
+        /* ===== Custom Cursor (image-based) ===== */
         @media (pointer: fine) {
             * { cursor: none !important; }
-            .cursor-dot {
+            .cursor-img {
                 position: fixed;
                 top: 0; left: 0;
-                width: 8px; height: 8px;
-                background: #222;
-                border-radius: 50%;
+                width: 32px; height: 32px;
                 pointer-events: none;
                 z-index: 100000;
-                transform: translate(-50%, -50%);
-                transition: opacity 0.3s, background 0.3s, width 0.3s, height 0.3s;
+                background: url('img/cursor.png') no-repeat center / contain;
                 will-change: transform;
+                transition: opacity 0.15s;
             }
-            .cursor-circle {
-                position: fixed;
-                top: 0; left: 0;
-                width: 40px; height: 40px;
-                border: 1.5px solid rgba(34,34,34,0.5);
-                border-radius: 50%;
-                pointer-events: none;
-                z-index: 99999;
-                transform: translate(-50%, -50%);
-                transition: width 0.35s cubic-bezier(0.25,1,0.5,1), height 0.35s cubic-bezier(0.25,1,0.5,1), border-color 0.35s, background 0.35s, opacity 0.3s;
-                will-change: transform;
+            .cursor-img.hover {
+                width: 44px; height: 44px;
+                background-image: url('img/f001.png');
             }
-            .cursor-dot.hover {
-                width: 0; height: 0;
-                opacity: 0;
+            .cursor-img.click {
+                width: 44px; height: 44px;
+                background-image: url('img/f002.png');
             }
-            .cursor-circle.hover {
-                width: 70px; height: 70px;
-                border-color: var(--primary);
-                background: rgba(255,140,66,0.1);
-            }
-            .cursor-dot.click {
-                width: 6px; height: 6px;
-                background: var(--primary);
-            }
-            .cursor-circle.click {
-                width: 30px; height: 30px;
-                border-color: var(--primary);
-                background: rgba(255,140,66,0.18);
-            }
-            .cursor-dot.hidden,
-            .cursor-circle.hidden {
+            .cursor-img.hidden {
                 opacity: 0;
             }
         }
@@ -862,8 +837,7 @@
 <body>
 
     <!-- Custom Cursor -->
-    <div class="cursor-dot" id="cursorDot"></div>
-    <div class="cursor-circle" id="cursorCircle"></div>
+    <div class="cursor-img" id="cursorImg"></div>
 
     <!-- ==================== HEADER ==================== -->
     <header class="header" id="header">
@@ -1083,39 +1057,26 @@
             observer.observe(el);
         });
 
-        // === Custom Cursor (studio-jt style) ===
-        var dot = document.getElementById('cursorDot');
-        var circle = document.getElementById('cursorCircle');
-        if (dot && circle && window.matchMedia('(pointer: fine)').matches) {
-            var mx = -100, my = -100;
-            var dx = -100, dy = -100;
-            var cx = -100, cy = -100;
-
-            document.addEventListener('mousemove', function(e) {
-                mx = e.clientX; my = e.clientY;
-            });
-
+        // === Custom Cursor (image-based) ===
+        var cursorImg = document.getElementById('cursorImg');
+        if (cursorImg && window.matchMedia('(pointer: fine)').matches) {
+            var mx = -100, my = -100, px = -100, py = -100;
+            document.addEventListener('mousemove', function(e) { mx = e.clientX; my = e.clientY; });
             (function animate() {
-                dx += (mx - dx) * 0.9;
-                dy += (my - dy) * 0.9;
-                dot.style.transform = 'translate(' + dx + 'px,' + dy + 'px) translate(-50%,-50%)';
-
-                cx += (mx - cx) * 0.12;
-                cy += (my - cy) * 0.12;
-                circle.style.transform = 'translate(' + cx + 'px,' + cy + 'px) translate(-50%,-50%)';
-
+                px += (mx - px) * 0.6;
+                py += (my - py) * 0.6;
+                cursorImg.style.transform = 'translate(' + px + 'px,' + py + 'px)';
                 requestAnimationFrame(animate);
             })();
-
             var hoverEls = 'a, button, input, textarea, select, [role="button"], .btn, .nav-link, .program-card, .gallery-item, .pricing-card';
             document.querySelectorAll(hoverEls).forEach(function(el) {
-                el.addEventListener('mouseenter', function() { dot.classList.add('hover'); circle.classList.add('hover'); });
-                el.addEventListener('mouseleave', function() { dot.classList.remove('hover'); circle.classList.remove('hover'); });
+                el.addEventListener('mouseenter', function() { cursorImg.classList.add('hover'); });
+                el.addEventListener('mouseleave', function() { cursorImg.classList.remove('hover'); });
             });
-            document.addEventListener('mousedown', function() { dot.classList.add('click'); circle.classList.add('click'); });
-            document.addEventListener('mouseup', function() { dot.classList.remove('click'); circle.classList.remove('click'); });
-            document.addEventListener('mouseleave', function() { dot.classList.add('hidden'); circle.classList.add('hidden'); });
-            document.addEventListener('mouseenter', function() { dot.classList.remove('hidden'); circle.classList.remove('hidden'); });
+            document.addEventListener('mousedown', function() { cursorImg.classList.add('click'); });
+            document.addEventListener('mouseup', function() { cursorImg.classList.remove('click'); });
+            document.addEventListener('mouseleave', function() { cursorImg.classList.add('hidden'); });
+            document.addEventListener('mouseenter', function() { cursorImg.classList.remove('hidden'); });
         }
     })();
     </script>
