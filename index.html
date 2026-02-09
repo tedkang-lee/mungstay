@@ -1330,12 +1330,12 @@
         /* ===== Custom Cursor (image-based) ===== */
         @media (pointer: fine) {
             *, *::before, *::after, html, body, a, button, input, textarea, select, img, svg, div, span, p, h1, h2, h3, h4, h5, h6, li, ul, ol, nav, header, footer, section, article, aside, main, form, label, [role="button"] {
-                cursor: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAGklEQVR4nO3BAQEAAACCIP+vbkhAAQAAAO8GECAAARlDNO4AAAAASUVORK5CYII=) 16 16, none !important;
+                cursor: url('img/blank.png') 16 16, none !important;
             }
             .cursor-img {
                 position: fixed;
                 top: 0; left: 0;
-                width: 24px; height: 24px;
+                width: 64px; height: 64px;
                 pointer-events: none;
                 z-index: 100000;
                 background: url('img/cursor.png') no-repeat center / contain;
@@ -1343,11 +1343,11 @@
                 transition: opacity 0.15s;
             }
             .cursor-img.hover {
-                width: 30px; height: 30px;
+                width: 88px; height: 88px;
                 background-image: url('img/f001.png');
             }
             .cursor-img.click {
-                width: 30px; height: 30px;
+                width: 88px; height: 88px;
                 background-image: url('img/f002.png');
             }
             .cursor-img.hidden {
