@@ -6,6 +6,9 @@
     <title>반려견 유치원 - 50K</title>
     <meta name="description" content="50K 반려견 유치원 - 전문 트레이너와 함께하는 사회화 교육, 놀이 프로그램. 소규모 맞춤 케어.">
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
     <style>
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -54,180 +57,123 @@
         img { max-width: 100%; display: block; }
         a { text-decoration: none; color: inherit; }
 
-        /* ===== Header ===== */
-        .header {
+        /* ===== Navbar ===== */
+        #navbar {
             position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            background: rgba(255,255,255,0.97);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border-bottom: 1px solid var(--gray-300);
-            box-shadow: var(--shadow-sm);
-        }
-
-        .header-inner {
+            top: 0; left: 0; right: 0;
+            height: 72px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            height: 72px;
+            padding: 0 40px;
+            z-index: 1001;
         }
 
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 24px;
-            font-weight: 800;
-            letter-spacing: -0.5px;
+        .nav-logo {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 30px;
+            letter-spacing: 0.12em;
             color: var(--dark);
+            text-decoration: none;
+            line-height: 1;
+            transition: opacity 0.3s;
         }
+        .nav-logo:hover { opacity: 0.7; }
+        .nav-logo span { color: var(--primary); }
 
-        .logo-icon { font-size: 28px; line-height: 1; }
-        .logo-accent { color: var(--primary); }
-
-        .nav { display: flex; align-items: center; }
-
-        .nav-list {
-            display: flex;
-            list-style: none;
-            gap: 4px;
-            align-items: center;
+        .nav-toggle {
+            width: 40px; height: 40px;
+            display: flex; flex-direction: column;
+            justify-content: center; gap: 7px;
+            cursor: pointer; background: none; border: none; padding: 4px;
         }
-
-        .nav-link {
-            display: block;
-            padding: 8px 16px;
-            font-size: 15px;
-            font-weight: 500;
-            color: var(--gray-600);
-            border-radius: 8px;
-            transition: color var(--transition), background var(--transition);
-        }
-
-        .nav-link:hover, .nav-link.active {
-            color: var(--dark);
-            background: var(--gray-100);
-        }
-
-        .nav-item { position: relative; }
-
-        .nav-dropdown {
-            position: absolute;
-            top: 100%;
-            left: 50%;
-            transform: translateX(-50%) translateY(8px);
-            min-width: 180px;
-            background: var(--white);
-            border-radius: var(--radius);
-            box-shadow: var(--shadow-lg);
-            border: 1px solid var(--gray-200);
-            padding: 8px 0;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.2s, visibility 0.2s, transform 0.2s;
-            z-index: 100;
-            list-style: none;
-        }
-
-        .nav-item:hover .nav-dropdown {
-            opacity: 1;
-            visibility: visible;
-            transform: translateX(-50%) translateY(0);
-        }
-
-        .nav-dropdown li a {
-            display: block;
-            padding: 10px 20px;
-            font-size: 14px;
-            font-weight: 500;
-            color: var(--gray-600);
-            transition: background 0.2s, color 0.2s;
-            white-space: nowrap;
-        }
-
-        .nav-dropdown li a:hover {
-            background: var(--primary-light);
-            color: var(--primary);
-        }
-
-        .nav-link.has-sub {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-
-        .nav-link.has-sub::after {
-            content: '';
-            width: 0; height: 0;
-            border-left: 4px solid transparent;
-            border-right: 4px solid transparent;
-            border-top: 5px solid currentColor;
-            transition: transform 0.2s;
-        }
-
-        .nav-item:hover .nav-link.has-sub::after { transform: rotate(180deg); }
-
-        .nav-cta {
-            margin-left: 12px;
-            padding: 10px 24px;
-            background: var(--primary);
-            color: var(--white);
-            font-weight: 700;
-            font-size: 14px;
-            border-radius: 8px;
-            transition: background var(--transition), transform var(--transition);
-        }
-
-        .nav-cta:hover {
-            background: var(--primary-hover);
-            transform: translateY(-1px);
-        }
-
-        /* Hamburger */
-        .hamburger {
-            display: none;
-            flex-direction: column;
-            justify-content: center;
-            gap: 5px;
-            width: 44px;
-            height: 44px;
-            background: none;
-            border: none;
-            cursor: pointer;
-            padding: 10px;
-            border-radius: 8px;
-            transition: background var(--transition);
-        }
-
-        .hamburger:hover { background: var(--gray-100); }
-
-        .hamburger span {
-            display: block;
-            width: 22px;
-            height: 2px;
+        .nav-toggle span {
+            display: block; width: 100%; height: 1.5px;
             background: var(--dark);
-            border-radius: 2px;
-            transition: transform var(--transition), opacity var(--transition);
+            transition: transform 0.4s cubic-bezier(0.76, 0, 0.24, 1), opacity 0.3s, width 0.3s;
+            transform-origin: center;
+        }
+        .nav-toggle span:nth-child(2) { width: 60%; margin-left: auto; }
+        .nav-toggle.open span:nth-child(1) { transform: translateY(8.5px) rotate(45deg); }
+        .nav-toggle.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+        .nav-toggle.open span:nth-child(3) { transform: translateY(-8.5px) rotate(-45deg); width: 100%; }
+
+        #nav-overlay {
+            position: fixed; inset: 0;
+            background: var(--white);
+            z-index: 1000;
+            display: flex; flex-direction: column;
+            padding: 120px 40px 60px;
+            pointer-events: none; opacity: 0;
+            transition: opacity 0.5s cubic-bezier(0.76, 0, 0.24, 1);
+        }
+        #nav-overlay.open { opacity: 1; pointer-events: all; }
+
+        .nav-menu-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0; flex: 1; align-content: start;
         }
 
-        .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
-        .hamburger.active span:nth-child(2) { opacity: 0; }
-        .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
-
-        .nav-overlay {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.4);
-            z-index: 998;
-            opacity: 0;
-            transition: opacity var(--transition);
+        .nav-item {
+            display: block; font-weight: 900;
+            font-size: clamp(28px, 4vw, 52px);
+            color: var(--dark); text-decoration: none;
+            padding: 18px 0; line-height: 1.1;
+            position: relative; overflow: hidden;
+            transform: translateY(30px); opacity: 0;
+            transition: transform 0.6s cubic-bezier(0.76, 0, 0.24, 1),
+                        opacity 0.6s cubic-bezier(0.76, 0, 0.24, 1);
         }
+        #nav-overlay.open .nav-item { transform: translateY(0); opacity: 1; }
+        #nav-overlay.open .nav-item:nth-child(1) { transition-delay: 0.05s; }
+        #nav-overlay.open .nav-item:nth-child(2) { transition-delay: 0.10s; }
+        #nav-overlay.open .nav-item:nth-child(3) { transition-delay: 0.15s; }
+        #nav-overlay.open .nav-item:nth-child(4) { transition-delay: 0.20s; }
+        #nav-overlay.open .nav-item:nth-child(5) { transition-delay: 0.25s; }
+        #nav-overlay.open .nav-item:nth-child(6) { transition-delay: 0.30s; }
 
-        .nav-overlay.active { display: block; opacity: 1; }
+        .nav-item::after {
+            content: ''; position: absolute;
+            bottom: 14px; left: 0; width: 0; height: 2px;
+            background: var(--primary);
+            transition: width 0.3s cubic-bezier(0.76, 0, 0.24, 1);
+        }
+        .nav-item:hover::after { width: 100%; }
+
+        .nav-divider {
+            width: 100%; height: 1px;
+            background: var(--gray-200); margin: 32px 0;
+            transform: scaleX(0); transform-origin: left;
+            transition: transform 0.6s cubic-bezier(0.76, 0, 0.24, 1) 0.35s;
+        }
+        #nav-overlay.open .nav-divider { transform: scaleX(1); }
+
+        .nav-footer {
+            display: flex; align-items: center; gap: 40px;
+            opacity: 0; transform: translateY(16px);
+            transition: opacity 0.5s 0.45s, transform 0.5s 0.45s;
+        }
+        #nav-overlay.open .nav-footer { opacity: 1; transform: translateY(0); }
+
+        .nav-footer-label {
+            font-size: 11px; letter-spacing: 0.15em;
+            color: var(--gray-500); text-transform: uppercase;
+        }
+        .nav-sns { display: flex; gap: 28px; }
+        .nav-sns a {
+            font-size: 13px; color: var(--dark);
+            text-decoration: none; letter-spacing: 0.05em;
+            position: relative; padding-bottom: 2px;
+        }
+        .nav-sns a::after {
+            content: ''; position: absolute;
+            bottom: 0; left: 0; width: 0; height: 1px;
+            background: var(--dark); transition: width 0.25s;
+        }
+        .nav-sns a:hover::after { width: 100%; }
+
+        body.nav-open { overflow: hidden; }
 
         /* ===== Page Hero ===== */
         .page-hero {
@@ -726,72 +672,9 @@
         }
 
         @media (max-width: 768px) {
-            .hamburger { display: flex; }
-
-            .nav {
-                position: fixed;
-                top: 0;
-                right: -100%;
-                width: min(300px, 85vw);
-                height: 100dvh;
-                background: var(--white);
-                z-index: 999;
-                transition: right var(--transition);
-                padding: 88px 0 40px;
-                box-shadow: -4px 0 20px rgba(0,0,0,0.1);
-                overflow-y: auto;
-                flex-direction: column;
-                align-items: stretch;
-            }
-
-            .nav.active { right: 0; }
-            .nav-list { flex-direction: column; gap: 0; }
-
-            .nav-link {
-                display: block;
-                padding: 16px 28px;
-                font-size: 16px;
-                border-radius: 0;
-                border-bottom: 1px solid var(--gray-100);
-            }
-
-            .nav-link.has-sub {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-            }
-
-            .nav-dropdown {
-                position: static;
-                transform: none;
-                box-shadow: none;
-                border: none;
-                border-radius: 0;
-                background: var(--gray-100);
-                max-height: 0;
-                overflow: hidden;
-                opacity: 1;
-                visibility: visible;
-                transition: max-height 0.3s ease;
-                padding: 0;
-            }
-
-            .nav-item.dropdown-open .nav-dropdown { max-height: 300px; transform: none; }
-            .nav-item:hover .nav-dropdown { opacity: 1; visibility: visible; transform: none; max-height: 0; }
-            .nav-item:hover.dropdown-open .nav-dropdown { max-height: 300px; }
-
-            .nav-dropdown li a {
-                padding: 12px 28px 12px 44px;
-                font-size: 15px;
-                border-bottom: 1px solid var(--gray-200);
-            }
-
-            .nav-cta {
-                display: block;
-                margin: 20px 24px 0;
-                text-align: center;
-                padding: 14px 24px;
-            }
+            #navbar { padding: 0 24px; }
+            #nav-overlay { padding: 100px 24px 48px; }
+            .nav-menu-grid { grid-template-columns: repeat(2, 1fr); }
 
             .page-hero { padding: 110px 0 60px; }
             .program-grid { grid-template-columns: 1fr; }
@@ -841,52 +724,33 @@
     <!-- Custom Cursor -->
     <div class="cursor-img" id="cursorImg"></div>
 
-    <!-- ==================== HEADER ==================== -->
-    <header class="header" id="header">
-        <div class="container">
-            <div class="header-inner">
-                <a href="index.html" class="logo">
-                    <span class="logo-icon">🐕</span>
-                    <span><span class="logo-accent">50K</span></span>
-                </a>
-                <nav class="nav" id="nav">
-                    <ul class="nav-list">
-                        <li><a href="index.html" class="nav-link">홈</a></li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link has-sub">소개</a>
-                            <ul class="nav-dropdown">
-                                <li><a href="index.html#about">시설안내</a></li>
-                                <li><a href="index.html#schedule">일과표</a></li>
-                                <li><a href="index.html#about">스태프 소개</a></li>
-                            </ul>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link has-sub active">서비스</a>
-                            <ul class="nav-dropdown">
-                                <li><a href="kindergarten.html">유치원</a></li>
-                                <li><a href="hotel.html">호텔</a></li>
-                                <li><a href="grooming.html">미용 & 그루밍</a></li>
-                                <li><a href="training.html">행동교정</a></li>
-                            </ul>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link has-sub">커뮤니티</a>
-                            <ul class="nav-dropdown">
-                                <li><a href="index.html#gallery">갤러리</a></li>
-                                <li><a href="index.html#testimonials">후기</a></li>
-                                <li><a href="index.html#news">소식</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                    <a href="index.html#contact" class="nav-cta">상담 예약</a>
-                </nav>
-                <button class="hamburger" id="hamburger" aria-label="메뉴 열기">
-                    <span></span><span></span><span></span>
-                </button>
-            </div>
+    <!-- ==================== NAVBAR ==================== -->
+    <nav id="navbar">
+        <a href="index.html" class="nav-logo">50<span>K</span></a>
+        <button class="nav-toggle" id="navToggle" aria-label="메뉴 열기">
+            <span></span><span></span><span></span>
+        </button>
+    </nav>
+    <div id="nav-overlay">
+        <div class="nav-menu-grid">
+            <a href="kindergarten.html" class="nav-item">유치원</a>
+            <a href="index.html#about" class="nav-item">시설안내</a>
+            <a href="index.html#news" class="nav-item">소식</a>
+            <a href="hotel.html" class="nav-item">호텔</a>
+            <a href="index.html#gallery" class="nav-item">갤러리</a>
+            <a href="index.html#contact" class="nav-item">상담예약</a>
         </div>
-    </header>
-    <div class="nav-overlay" id="navOverlay"></div>
+        <div class="nav-divider"></div>
+        <div class="nav-footer">
+            <span class="nav-footer-label">Channel</span>
+            <nav class="nav-sns">
+                <a href="#">Instagram</a>
+                <a href="#">Naver Blog</a>
+                <a href="#">Kakao</a>
+                <a href="#">Youtube</a>
+            </nav>
+        </div>
+    </div>
 
     <!-- ==================== PAGE HERO ==================== -->
     <section class="page-hero">
@@ -1149,59 +1013,38 @@
     (function() {
         'use strict';
 
-        var header = document.getElementById('header');
-        var hamburger = document.getElementById('hamburger');
-        var nav = document.getElementById('nav');
-        var overlay = document.getElementById('navOverlay');
         var scrollTopBtn = document.getElementById('scrollTop');
 
-        // Mobile Menu
-        function openMenu() {
-            hamburger.classList.add('active');
-            nav.classList.add('active');
-            overlay.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
+        // Navigation
+        var navToggle = document.getElementById('navToggle');
+        var navOverlay = document.getElementById('nav-overlay');
 
-        function closeMenu() {
-            hamburger.classList.remove('active');
-            nav.classList.remove('active');
-            overlay.classList.remove('active');
-            document.body.style.overflow = '';
-        }
-
-        hamburger.addEventListener('click', function() {
-            nav.classList.contains('active') ? closeMenu() : openMenu();
+        navToggle.addEventListener('click', function() {
+            var isOpen = navOverlay.classList.toggle('open');
+            navToggle.classList.toggle('open', isOpen);
+            document.body.classList.toggle('nav-open', isOpen);
+            navToggle.setAttribute('aria-label', isOpen ? '메뉴 닫기' : '메뉴 열기');
         });
 
-        overlay.addEventListener('click', closeMenu);
-
-        nav.querySelectorAll('.nav-link:not(.has-sub), .nav-cta, .nav-dropdown a').forEach(function(link) {
-            link.addEventListener('click', closeMenu);
+        navOverlay.querySelectorAll('.nav-item').forEach(function(item) {
+            item.addEventListener('click', function() {
+                navOverlay.classList.remove('open');
+                navToggle.classList.remove('open');
+                document.body.classList.remove('nav-open');
+            });
         });
 
-        // Dropdown (mobile accordion)
-        var navItems = document.querySelectorAll('.nav-item');
-        navItems.forEach(function(item) {
-            var link = item.querySelector('.nav-link.has-sub');
-            if (link) {
-                link.addEventListener('click', function(e) {
-                    if (window.innerWidth <= 768) {
-                        e.preventDefault();
-                        navItems.forEach(function(other) {
-                            if (other !== item) other.classList.remove('dropdown-open');
-                        });
-                        item.classList.toggle('dropdown-open');
-                    }
-                });
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                navOverlay.classList.remove('open');
+                navToggle.classList.remove('open');
+                document.body.classList.remove('nav-open');
             }
         });
 
         // Scroll
         window.addEventListener('scroll', function() {
-            var y = window.scrollY;
-            header.classList.toggle('scrolled', y > 20);
-            scrollTopBtn.classList.toggle('visible', y > 600);
+            scrollTopBtn.classList.toggle('visible', window.scrollY > 600);
         });
 
         scrollTopBtn.addEventListener('click', function() {
