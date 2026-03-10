@@ -70,17 +70,27 @@
             z-index: 1001;
         }
 
+        /* Logo image crossfade */
         .nav-logo {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 30px;
-            letter-spacing: 0.12em;
-            color: var(--dark);
+            display: block;
+            position: relative;
+            height: 32px;
             text-decoration: none;
-            line-height: 1;
-            transition: opacity 0.3s;
+            flex-shrink: 0;
         }
-        .nav-logo:hover { opacity: 0.7; }
-        .nav-logo span { color: var(--primary); }
+        .nav-logo img {
+            height: 100%;
+            width: auto;
+            display: block;
+            transition: opacity 0.35s ease;
+        }
+        .nav-logo .logo-b {
+            position: absolute;
+            top: 0; left: 0;
+            opacity: 0;
+        }
+        .nav-logo:hover .logo-w { opacity: 0; }
+        .nav-logo:hover .logo-b { opacity: 1; }
 
         .nav-toggle {
             width: 44px;
@@ -113,47 +123,48 @@
         .nav-toggle.open span:nth-child(1) { transform: translateY(4.75px) rotate(45deg); }
         .nav-toggle.open span:nth-child(2) { transform: translateY(-4.75px) rotate(-45deg); }
 
-        /* Fullscreen overlay */
+        /* Fullscreen overlay — vinylc 스타일 */
         #nav-overlay {
             position: fixed;
             inset: 0;
-            background: var(--white);
+            background: #ffffff;
             z-index: 1000;
             display: flex;
             flex-direction: column;
-            padding: 120px 40px 60px;
+            align-items: center;
+            justify-content: center;
+            padding: 100px 40px 80px;
             pointer-events: none;
             opacity: 0;
             transition: opacity 0.5s cubic-bezier(0.76, 0, 0.24, 1);
         }
+        #nav-overlay.open { opacity: 1; pointer-events: all; }
 
-        #nav-overlay.open {
-            opacity: 1;
-            pointer-events: all;
-        }
-
+        /* 메뉴 — 중앙 정렬 */
         .nav-menu-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
             flex: 1;
-            align-content: start;
+            width: 100%;
+            gap: 0;
         }
 
         .nav-item {
             display: block;
             font-weight: 900;
-            font-size: clamp(28px, 4vw, 52px);
-            color: var(--dark);
+            font-size: clamp(38px, 5.5vw, 80px);
+            color: #111111;
             text-decoration: none;
-            padding: 18px 0;
-            line-height: 1.1;
+            padding: 10px 0;
+            line-height: 1;
             position: relative;
-            overflow: hidden;
-            transform: translateY(30px);
+            text-align: center;
+            transform: translateY(40px);
             opacity: 0;
-            transition: transform 0.6s cubic-bezier(0.76, 0, 0.24, 1),
-                        opacity 0.6s cubic-bezier(0.76, 0, 0.24, 1);
+            transition: transform 0.7s cubic-bezier(0.76, 0, 0.24, 1),
+                        opacity 0.7s cubic-bezier(0.76, 0, 0.24, 1);
         }
 
         #nav-overlay.open .nav-item { transform: translateY(0); opacity: 1; }
@@ -164,61 +175,71 @@
         #nav-overlay.open .nav-item:nth-child(5) { transition-delay: 0.25s; }
         #nav-overlay.open .nav-item:nth-child(6) { transition-delay: 0.30s; }
 
+        /* 호버 언더라인 — 굵은 블랙 */
         .nav-item::after {
             content: '';
             position: absolute;
-            bottom: 14px; left: 0;
-            width: 0; height: 2px;
-            background: var(--primary);
-            transition: width 0.3s cubic-bezier(0.76, 0, 0.24, 1);
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 3px;
+            background: #111111;
+            transition: width 0.38s cubic-bezier(0.76, 0, 0.24, 1);
         }
         .nav-item:hover::after { width: 100%; }
 
+        /* 구분선 */
         .nav-divider {
             width: 100%;
+            max-width: 560px;
             height: 1px;
-            background: var(--gray-200);
-            margin: 32px 0;
+            background: #e8e8e8;
+            margin: 40px 0 28px;
             transform: scaleX(0);
             transform-origin: left;
-            transition: transform 0.6s cubic-bezier(0.76, 0, 0.24, 1) 0.35s;
+            transition: transform 0.6s cubic-bezier(0.76, 0, 0.24, 1) 0.38s;
         }
         #nav-overlay.open .nav-divider { transform: scaleX(1); }
 
+        /* Channel 하단 */
         .nav-footer {
             display: flex;
             align-items: center;
-            gap: 40px;
+            gap: 48px;
             opacity: 0;
-            transform: translateY(16px);
-            transition: opacity 0.5s 0.45s, transform 0.5s 0.45s;
+            transform: translateY(14px);
+            transition: opacity 0.5s 0.48s, transform 0.5s 0.48s;
         }
         #nav-overlay.open .nav-footer { opacity: 1; transform: translateY(0); }
 
         .nav-footer-label {
-            font-size: 11px;
-            letter-spacing: 0.15em;
-            color: var(--gray-500);
+            font-size: 10px;
+            letter-spacing: 0.2em;
+            color: #aaaaaa;
             text-transform: uppercase;
+            font-weight: 400;
         }
 
-        .nav-sns { display: flex; gap: 28px; }
+        .nav-sns { display: flex; gap: 32px; }
 
         .nav-sns a {
             font-size: 13px;
-            color: var(--dark);
+            font-weight: 500;
+            color: #111111;
             text-decoration: none;
-            letter-spacing: 0.05em;
+            letter-spacing: 0.06em;
             position: relative;
-            padding-bottom: 2px;
+            padding-bottom: 3px;
+            transition: color 0.2s;
         }
         .nav-sns a::after {
             content: '';
             position: absolute;
             bottom: 0; left: 0;
-            width: 0; height: 1px;
-            background: var(--dark);
-            transition: width 0.25s;
+            width: 0; height: 1.5px;
+            background: #111111;
+            transition: width 0.3s cubic-bezier(0.76, 0, 0.24, 1);
         }
         .nav-sns a:hover::after { width: 100%; }
 
@@ -1257,8 +1278,8 @@
             .section { padding: 72px 0; }
 
             #navbar { padding: 0 24px; }
-            #nav-overlay { padding: 100px 24px 48px; }
-            .nav-menu-grid { grid-template-columns: repeat(2, 1fr); }
+            #nav-overlay { padding: 88px 24px 56px; }
+            .nav-item { font-size: clamp(30px, 8vw, 52px); }
 
             .hero { min-height: auto; padding: 110px 0 64px; }
             .hero-trust { gap: 16px; }
@@ -1289,7 +1310,8 @@
 
         /* ===== Responsive: Small Mobile ===== */
         @media (max-width: 480px) {
-            .nav-menu-grid { grid-template-columns: 1fr; }
+            .nav-item { font-size: clamp(26px, 9vw, 40px); padding: 8px 0; }
+            .nav-sns { gap: 20px; }
             .container { padding: 0 16px; }
             .hero { padding: 100px 0 56px; }
             .hero-actions { flex-direction: column; }
@@ -1353,7 +1375,10 @@
 
     <!-- ==================== NAVBAR ==================== -->
     <nav id="navbar">
-        <a href="#home" class="nav-logo">50<span>K</span></a>
+        <a href="#home" class="nav-logo" aria-label="50K 홈으로">
+            <img src="img/logo_w.png" class="logo-w" alt="50K">
+            <img src="img/logo_b.png" class="logo-b" alt="50K">
+        </a>
         <button class="nav-toggle" id="navToggle" aria-label="메뉴 열기">
             <span></span>
             <span></span>

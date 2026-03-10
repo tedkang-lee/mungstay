@@ -69,17 +69,27 @@
             z-index: 1001;
         }
 
+        /* Logo image crossfade */
         .nav-logo {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 30px;
-            letter-spacing: 0.12em;
-            color: var(--dark);
+            display: block;
+            position: relative;
+            height: 32px;
             text-decoration: none;
-            line-height: 1;
-            transition: opacity 0.3s;
+            flex-shrink: 0;
         }
-        .nav-logo:hover { opacity: 0.7; }
-        .nav-logo span { color: var(--primary); }
+        .nav-logo img {
+            height: 100%;
+            width: auto;
+            display: block;
+            transition: opacity 0.35s ease;
+        }
+        .nav-logo .logo-b {
+            position: absolute;
+            top: 0; left: 0;
+            opacity: 0;
+        }
+        .nav-logo:hover .logo-w { opacity: 0; }
+        .nav-logo:hover .logo-b { opacity: 1; }
 
         .nav-toggle {
             width: 44px; height: 44px;
@@ -104,23 +114,25 @@
             background: var(--white);
             z-index: 1000;
             display: flex; flex-direction: column;
-            padding: 120px 40px 60px;
+            align-items: center; justify-content: center;
+            padding: 100px 40px 80px;
             pointer-events: none; opacity: 0;
             transition: opacity 0.5s cubic-bezier(0.76, 0, 0.24, 1);
         }
         #nav-overlay.open { opacity: 1; pointer-events: all; }
 
         .nav-menu-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 0; flex: 1; align-content: start;
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            flex: 1; width: 100%;
         }
 
         .nav-item {
             display: block; font-weight: 900;
-            font-size: clamp(28px, 4vw, 52px);
-            color: var(--dark); text-decoration: none;
-            padding: 18px 0; line-height: 1.1;
+            font-size: clamp(38px, 5.5vw, 80px);
+            color: #111111; text-decoration: none;
+            text-align: center;
+            padding: 14px 0; line-height: 1.1;
             position: relative; overflow: hidden;
             transform: translateY(30px); opacity: 0;
             transition: transform 0.6s cubic-bezier(0.76, 0, 0.24, 1),
@@ -136,9 +148,10 @@
 
         .nav-item::after {
             content: ''; position: absolute;
-            bottom: 14px; left: 0; width: 0; height: 2px;
-            background: var(--primary);
-            transition: width 0.3s cubic-bezier(0.76, 0, 0.24, 1);
+            bottom: 10px; left: 50%; transform: translateX(-50%);
+            width: 0; height: 3px;
+            background: #111111;
+            transition: width 0.38s cubic-bezier(0.76, 0, 0.24, 1);
         }
         .nav-item:hover::after { width: 100%; }
 
@@ -674,8 +687,8 @@
 
         @media (max-width: 768px) {
             #navbar { padding: 0 24px; }
-            #nav-overlay { padding: 100px 24px 48px; }
-            .nav-menu-grid { grid-template-columns: repeat(2, 1fr); }
+            #nav-overlay { padding: 80px 24px 48px; }
+            .nav-item { font-size: clamp(32px, 9vw, 52px); padding: 10px 0; }
 
             .page-hero { padding: 110px 0 60px; }
             .program-grid { grid-template-columns: 1fr; }
@@ -727,7 +740,10 @@
 
     <!-- ==================== NAVBAR ==================== -->
     <nav id="navbar">
-        <a href="index.html" class="nav-logo">50<span>K</span></a>
+        <a href="index.html" class="nav-logo" aria-label="50K 홈으로">
+            <img src="img/logo_w.png" class="logo-w" alt="50K">
+            <img src="img/logo_b.png" class="logo-b" alt="50K">
+        </a>
         <button class="nav-toggle" id="navToggle" aria-label="메뉴 열기">
             <span></span><span></span>
         </button>
