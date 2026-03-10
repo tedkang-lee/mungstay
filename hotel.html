@@ -707,33 +707,9 @@
             .gallery-grid { grid-template-columns: 1fr 1fr; }
         }
 
-        /* ===== Custom Cursor (image-based) ===== */
-        @media (pointer: fine) {
-            *, *::before, *::after, html, body, a, button, input, textarea, select, img, svg, div, span, p, h1, h2, h3, h4, h5, h6, li, ul, ol, nav, header, footer, section, article, aside, main, form, label, [role="button"] {
-                cursor: url('img/blank.png') 16 16, none !important;
-            }
-            .cursor-img {
-                position: fixed;
-                top: 0; left: 0;
-                width: 128px; height: 128px;
-                pointer-events: none;
-                z-index: 100000;
-                background: url('img/cursor.png') no-repeat center / contain;
-                will-change: transform;
-                transition: opacity 0.15s;
-            }
-            .cursor-img.hover {
-                width: 88px; height: 88px;
-                background-image: url('img/f001.png');
-            }
-            .cursor-img.click {
-                width: 88px; height: 88px;
-                background-image: url('img/f002.png');
-            }
-            .cursor-img.hidden {
-                opacity: 0;
-            }
-        }
+        /* ===== Custom Cursor (비활성 - 추후 활성화 예정) =====
+        .cursor-img { display: none; }
+        ===== */
     </style>
 </head>
 <body>
@@ -936,34 +912,9 @@
             observer.observe(el);
         });
 
-        // === Custom Cursor (image-based) ===
-        var cursorImg = document.getElementById('cursorImg');
-        if (cursorImg && window.matchMedia('(pointer: fine)').matches) {
-            var mx = -100, my = -100, px = -100, py = -100;
-            document.addEventListener('mousemove', function(e) { mx = e.clientX; my = e.clientY; });
-            (function animate() {
-                px += (mx - px) * 0.6;
-                py += (my - py) * 0.6;
-                cursorImg.style.transform = 'translate(' + px + 'px,' + py + 'px)';
-                requestAnimationFrame(animate);
-            })();
-            var hoverEls = 'a, button, input, textarea, select, [role="button"], .btn, .nav-link, .program-card, .gallery-item, .pricing-card';
-            document.querySelectorAll(hoverEls).forEach(function(el) {
-                el.addEventListener('mouseenter', function() { cursorImg.classList.add('hover'); });
-                el.addEventListener('mouseleave', function() { cursorImg.classList.remove('hover'); });
-            });
-            document.addEventListener('mousedown', function() { cursorImg.classList.add('click'); });
-            document.addEventListener('mouseup', function() { cursorImg.classList.remove('click'); });
-            document.addEventListener('mouseleave', function() { cursorImg.classList.add('hidden'); });
-            document.addEventListener('mouseenter', function() { cursorImg.classList.remove('hidden'); });
-
-            // Chrome 강제 커서 숨김
-            var style = document.createElement('style');
-            style.textContent = 'html, html *, html *::before, html *::after { cursor: none !important; }';
-            document.head.appendChild(style);
-            document.documentElement.style.setProperty('cursor', 'none', 'important');
-            document.body.style.setProperty('cursor', 'none', 'important');
-        }
+        // === Custom Cursor (비활성 - 추후 활성화 예정) ===
+        // var cursorImg = document.getElementById('cursorImg');
+        // 커스텀 커서 코드 임시 비활성화
     })();
     </script>
 
