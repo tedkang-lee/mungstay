@@ -1409,7 +1409,35 @@
             .schedule-time { width: auto; }
         }
 
-        /* ===== Custom Cursor (hover & click only) ===== */
+        /* ===== Custom Cursor ===== */
+        .cursor-img {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 64px;
+            height: 64px;
+            background-image: url('img/f001.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            pointer-events: none;
+            z-index: 99999;
+            transform: translate(-100px, -100px);
+            transition: opacity 0.2s;
+        }
+
+        .cursor-img.hover {
+            background-image: url('img/f002.png');
+        }
+
+        .cursor-img.click {
+            background-image: url('img/f002.png');
+            transform: scale(0.92);
+        }
+
+        .cursor-img.hidden {
+            opacity: 0;
+        }
+
         @media (pointer: fine) {
             a, button, input[type="submit"], input[type="button"], select,
             [role="button"], .btn, .nav-link, .nav-cta, .service-card,
